@@ -11,6 +11,7 @@
 #import "TBSphere.h"
 #import "TBTypes.h"
 #import "TBCube.h"
+#import "TBScene.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
@@ -35,6 +36,7 @@ GLint uniforms[NUM_UNIFORMS];
     TBShader* shader;
     TBSphere* sphereTest;
     TBCube* cubeTest;
+    TBScene* sceneTest;
 }
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
@@ -106,6 +108,7 @@ GLint uniforms[NUM_UNIFORMS];
     
     sphereTest = [[TBSphere alloc] initWithRadius:1 andParts:12];
     cubeTest = [[TBCube alloc] initWithSetup];
+    sceneTest = [[TBSene alloc]init];
     /*glGenVertexArraysOES(1, &_vertexArray);
     glBindVertexArrayOES(_vertexArray);
     

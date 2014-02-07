@@ -11,6 +11,7 @@
 
 @interface TBParticle : TBNode
 
+@property GLfloat lifeTime;       // lifetime in seconds
 - (id)initWithShape:(id<Drawable>)shape;
 - (void)addForce:(GLKVector3)force;
 

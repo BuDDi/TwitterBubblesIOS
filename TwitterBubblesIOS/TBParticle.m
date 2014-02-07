@@ -13,13 +13,13 @@
     id<Drawable> _shape;
     GLKVector3 _force;
     GLfloat drag;
-    GLfloat lifeTime;       // lifetime in seconds
-    
 }
 - (void)destroy;
 @end
 
 @implementation TBParticle
+
+@synthesize lifeTime = _lifeTime;
 
 - (id)initWithShape:(id<Drawable>)shape
 {
@@ -34,8 +34,8 @@
 {
     GLfloat elapsedSec = elapsedMillis / 1000.0f;
     // reduce lifeTime
-    lifeTime -= elapsedSec;
-    if (lifeTime <= 0) {
+    _lifeTime -= elapsedSec;
+    if (_lifeTime <= 0) {
         [self destroy];
     }
     [self move:elapsedSec ];

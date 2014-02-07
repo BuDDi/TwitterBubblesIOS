@@ -26,9 +26,14 @@
     return self;
 }
 
-- (void) setupWithHost:(int)host andPort:(int)port
+- (void) setupWithHost:(NSString*)host onPort:(int)port
 {
-    socketIOClient connectToHost:@"localhost" onPort:<#(NSInteger)#>
+    [socketIOClient connectToHost:host onPort:port];
+}
+
+- (void) socketIO:(SocketIO *)socket didReceiveJSON:(SocketIOPacket *)packet
+{
+    NSLog(@"didReceiveMessage() >>> data: ");
 }
 
 @end
