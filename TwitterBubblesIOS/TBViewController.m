@@ -12,6 +12,7 @@
 #import "TBTypes.h"
 #import "TBCube.h"
 #import "TBScene.h"
+#include <mach/mach_time.h>
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
@@ -93,6 +94,8 @@ GLint uniforms[NUM_UNIFORMS];
     // Dispose of any resources that can be recreated.
 }
 
+uint64_t lastDrawTime;
+
 - (void)setupGL
 {
     [EAGLContext setCurrentContext:self.context];
@@ -106,9 +109,26 @@ GLint uniforms[NUM_UNIFORMS];
     
     glEnable(GL_DEPTH_TEST);
     
+    // start time measuring
+    // run this once
+    mach_timebase_info_data_t timer;
+    mach_timebase_info(&timer);
+    
+    // this returns the current time in nanos, but not in a perfectly human readable format - e.g. don't expect it to be number-of-nanos-since-1970 or something, like the unixtime.
+    uint64_t start_time = mach_absolute_time();
+    
+    // do something that takes time
+    
+    // now calc the elapsed time
+    lastDrawTime = mach_absolute_time();
+    int64_t elapsed = lastDrawTime - start_time;
+    elapsed *= timer.numer;
+    elapsed /= timer.denom;
+    printf("Elapsed time: %lld ns\n", elapsed);
+    
     sphereTest = [[TBSphere alloc] initWithRadius:1 andParts:12];
     cubeTest = [[TBCube alloc] initWithSetup];
-    sceneTest = [[TBSene alloc]init];
+    sceneTest = [[TBScene alloc]init];
     /*glGenVertexArraysOES(1, &_vertexArray);
     glBindVertexArrayOES(_vertexArray);
     
@@ -171,6 +191,9 @@ GLint uniforms[NUM_UNIFORMS];
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+    uint64_t current = mach_absolute_time();
+    int64_t elapsedNanos = current - lastDrawTime;
+    GLfloat elapsedMillis = elapsedNanos / 1000000.0f;
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -191,6 +214,7 @@ GLint uniforms[NUM_UNIFORMS];
     //glDrawArrays(GL_TRIANGLES, 0, 36);
     [sphereTest draw];
     //[cubeTest draw];
+    lastDrawTime = current;
 }
 
 #pragma mark -  OpenGL ES 2 shader compilation

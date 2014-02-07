@@ -12,7 +12,7 @@
 {
     SocketIO* socketIOClient;
 }
-
+- (void) setupWithHost:(NSString*)host onPort:(int)port;
 @end
 
 @implementation TBParticleEmitter
@@ -22,6 +22,7 @@
     self = [super init];
     if (self) {
         socketIOClient = [[SocketIO alloc] initWithDelegate:self];
+        [self setupWithHost:@"localhost" onPort:3001];
     }
     return self;
 }

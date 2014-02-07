@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TBTypes.h"
+//#import "TBTypes.h"
+#import "TBNode.h"
 
 @interface TBSphere : NSObject
 

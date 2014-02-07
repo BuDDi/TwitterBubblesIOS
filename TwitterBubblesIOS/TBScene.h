@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TBNode.h"
 
-@interface TBScene : NSObject
+@interface TBScene : TBNode
 
 
 

@@ -8,6 +8,7 @@
 
 #import "TBScene.h"
 #import "TBNode.h"
+#import "TBParticleEmitter.h"
 
 @interface TBScene()
 {
@@ -26,6 +27,7 @@
     if (self) {
         rootNode = [[TBNode alloc ] init];
         matrixStack = GLKMatrixStackCreate(NULL);
+        [rootNode addChild:[[TBParticleEmitter alloc]init]];
     }
     return self;
 }
